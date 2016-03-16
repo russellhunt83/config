@@ -353,13 +353,13 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Config`.`TestTableDATAURI`
+-- Table `Config`.`TestTable1`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Config`.`TestTableDATAURI` ;
+DROP TABLE IF EXISTS `Config`.`TestTable1` ;
 
-CREATE TABLE IF NOT EXISTS `Config`.`TestTableDATAURI` (
-  `idTestTableDATAURI` INT NOT NULL,
-  PRIMARY KEY (`idTestTableDATAURI`))
+CREATE TABLE IF NOT EXISTS `Config`.`TestTable1` (
+  `idTestTable1` INT NOT NULL,
+  PRIMARY KEY (`idTestTable1`))
 ENGINE = InnoDB;
 
 
