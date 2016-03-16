@@ -299,7 +299,6 @@ CREATE TABLE IF NOT EXISTS `Config`.`MappedField` (
     ON UPDATE RESTRICT)
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `Config`.`MappedTransform`
 -- -----------------------------------------------------
