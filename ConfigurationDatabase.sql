@@ -221,6 +221,27 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `Config`.`DataURI`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Config`.`DataURI` ;
+
+CREATE TABLE IF NOT EXISTS `Config`.`DataURI` (
+  `DataURIID` INT NOT NULL AUTO_INCREMENT,
+  `DataSourceID` INT NULL,
+  `AttributeID` INT NULL,
+  `DataURIName` VARCHAR(255) NULL,
+  PRIMARY KEY (`DataURIID`),
+  INDEX `fk_DataURI_DataSource1_idx` (`DataSourceID` ASC),
+  CONSTRAINT `fk_DataURI_DataSource`
+    FOREIGN KEY (`DataSourceID`)
+    REFERENCES `Config`.`DataSource` (`DataSourceID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+COMMENT = 'For Spreadsheet, Database Table, API Endpoint information';
+
+
+-- -----------------------------------------------------
 -- Table `Config`.`Attribute`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `Config`.`Attribute` ;
@@ -235,6 +256,7 @@ CREATE TABLE IF NOT EXISTS `Config`.`Attribute` (
   PRIMARY KEY (`AttributeID`),
   INDEX `fk_from_datatype_idx` (`DataTypeID` ASC),
   INDEX `fk_from_attribute_group_idx` (`AttributeGroupID` ASC),
+  INDEX `fk_Attribute_DataURI_idx` (`DataURIID` ASC),
   CONSTRAINT `fk_from_datatype`
     FOREIGN KEY (`DataTypeID`)
     REFERENCES `Config`.`DataType` (`DataTypeID`)
@@ -244,7 +266,12 @@ CREATE TABLE IF NOT EXISTS `Config`.`Attribute` (
     FOREIGN KEY (`AttributeGroupID`)
     REFERENCES `Config`.`AttributeGroup` (`AttributeGroupID`)
     ON DELETE RESTRICT
-    ON UPDATE RESTRICT)
+    ON UPDATE RESTRICT,
+  CONSTRAINT `fk_Attribute_DataURI`
+    FOREIGN KEY (`DataURIID`)
+    REFERENCES `Config`.`DataURI` (`DataURIID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -322,6 +349,17 @@ CREATE TABLE IF NOT EXISTS `Config`.`MappedTransform` (
     REFERENCES `Config`.`MappedField` (`MappedFieldID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Config`.`TestTableDATAURI`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Config`.`TestTableDATAURI` ;
+
+CREATE TABLE IF NOT EXISTS `Config`.`TestTableDATAURI` (
+  `idTestTableDATAURI` INT NOT NULL,
+  PRIMARY KEY (`idTestTableDATAURI`))
 ENGINE = InnoDB;
 
 
