@@ -515,48 +515,6 @@ END$$
 
 DELIMITER ;
 
--- -----------------------------------------------------
--- procedure GetObjectListForDocumentation
--- -----------------------------------------------------
-
-DELIMITER $$
-USE `documenter_test`$$
-CREATE DEFINER=`root`@`%` PROCEDURE `GetObjectListForDocumentation`(in param_schema_name VARCHAR(50), in param_object_name VARCHAR(100))
-BEGIN
-
-	SELECT
-		ep_doc.table_schema,
-		ep_doc.table_name,
-		ep.value
-	FROM
-		(
-			SELECT
-				table_schema,
-                table_name
-			FROM
-                configuration_live.extended_properties
-			WHERE
-				name = 'Document' AND
-                value = 'Yes'
-		) ep_doc
-	LEFT JOIN
-		configuration_live.extended_properties ep
-	ON
-		ep.table_schema = ep_doc.table_schema AND
-		ep.table_name = ep_doc.table_name AND
-		ep.column_name IS NULL AND
-		ep.name = 'Description'
-	WHERE
-		(param_schema_name = '' OR 
-		param_object_name = '') 
-		OR
-		(ep.table_schema = param_schema_name AND
-		ep.table_name = param_object_name);
-        
-END$$
-
-DELIMITER ;
-
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
